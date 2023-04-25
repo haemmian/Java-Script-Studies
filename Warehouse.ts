@@ -13,7 +13,7 @@ export class Warehouse {
      * @param car to park
      */
     // your method
-    public parkCar (car: (Car | RaceCar)) {
+    public parkCar (car: Car | RaceCar) {
         this._parkingSlot.push(car);
         console.log("Car Parked!");
     }

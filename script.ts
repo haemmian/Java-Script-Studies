@@ -1,16 +1,10 @@
 import { Warehouse } from "./Warehouse";
 import { Car, RaceCar } from "./Vehicle"
 
-const car1: Car = new Car(1000, 4, 120, 13412, "black");
-const car2: Car = new Car(500, 3, 90, 4333, "red");
-const car3: Car = new Car(2220, 2, 400, 1113, "blue");
-const raceCar: RaceCar = new RaceCar(10000, 2, 400, 9992, "white", 500);
+
 const warehouse: Warehouse = new Warehouse(20);
 
-warehouse.parkCar(car1);
-warehouse.parkCar(car2);
-warehouse.parkCar(car3);
-warehouse.parkCar(raceCar)
+
 
 // console.log(`current amount of cars: ${warehouse.currentAmountOfCars()}`);
 // const car4 = warehouse.getCar(1);
@@ -18,4 +12,31 @@ warehouse.parkCar(raceCar)
 //
 // console.log(`Capacity: ${warehouse.capacity()} `)
 
-console.log(`List of all returned car: ${warehouse.getAllCarsSorted()}`)
+
+
+//** TASK 7 **
+//In the main file, mock the warehouse usage by adding three cars:
+const BMW: Car = new Car(50000, 5, 200, 445445, "black");
+const Audi: Car = new Car(45000, 5, 180, 987654, "turquoise");
+const Ferrari: RaceCar = new RaceCar(200000, 2, 400, 111777, "red", 300);
+
+warehouse.parkCar(BMW);
+warehouse.parkCar(Audi);
+warehouse.parkCar(Ferrari);
+
+/**
+ * After storing those three cars, retrieve them again by calling the method, that returns the cars
+ * sorted by registration number. To verify the order, log the cars to the console.
+ */
+console.log(`List of all returned car (sorted): ${warehouse.getAllCarsSorted()}`)
+
+/**
+ * Then, retrieve the car "Audi" from the warehouse, by calling the method, that returns the car at a given index.
+ * To verify that you really retrieved the Audi, log its properties to the console.
+ */
+
+warehouse.parkCar(BMW);
+warehouse.parkCar(Audi);
+warehouse.parkCar(Ferrari);
+
+console.log(`Retrieved Audi: ${warehouse.getCar(1)}`)
