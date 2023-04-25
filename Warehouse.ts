@@ -1,4 +1,4 @@
-import {Car} from "./Vehicle";
+import {Car, RaceCar} from "./Vehicle";
 
 export class Warehouse {
     private readonly _capacity: number;
@@ -13,7 +13,7 @@ export class Warehouse {
      * @param car to park
      */
     // your method
-    public parkCar (car: Car) {
+    public parkCar (car: (Car | RaceCar)) {
         this._parkingSlot.push(car);
         console.log("Car Parked!");
     }
@@ -61,4 +61,25 @@ export class Warehouse {
         return this._capacity;
     }
 
+    /**
+     * @brief get all cars
+     * @return all cars
+     */
+    // your method
+    public getAllCars () {
+        const tmpCarData = this._parkingSlot.filter(index => index !== undefined);
+        this._parkingSlot = [];
+        return  tmpCarData;
+    }
+
+    /**
+     * @brief get all cars but sorted by registration number
+     * @return all cars
+     */
+    // your method
+    public getAllCarsSorted () {
+        const tmpCarData = this._parkingSlot.filter(index => index !== undefined);
+        this._parkingSlot = [];
+        return tmpCarData.sort((a, b) => a.vehicleRegistrationNumber() - b.vehicleRegistrationNumber());
+    }
 }

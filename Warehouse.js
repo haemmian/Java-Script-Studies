@@ -52,6 +52,26 @@ var Warehouse = /** @class */ (function () {
     Warehouse.prototype.capacity = function () {
         return this._capacity;
     };
+    /**
+     * @brief get all cars
+     * @return all cars
+     */
+    // your method
+    Warehouse.prototype.getAllCars = function () {
+        var tmpCarData = this._parkingSlot.filter(function (index) { return index !== undefined; });
+        this._parkingSlot = [];
+        return tmpCarData;
+    };
+    /**
+     * @brief get all cars but sorted by registration number
+     * @return all cars
+     */
+    // your method
+    Warehouse.prototype.getAllCarsSorted = function () {
+        var tmpCarData = this._parkingSlot.filter(function (index) { return index !== undefined; });
+        this._parkingSlot = [];
+        return tmpCarData.sort(function (a, b) { return a.vehicleRegistrationNumber() - b.vehicleRegistrationNumber(); });
+    };
     return Warehouse;
 }());
 exports.Warehouse = Warehouse;
