@@ -7,13 +7,41 @@
 
 <link href="style.css" rel="stylesheet">
 
+<style>
+    .parking-house {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        height: auto;
+        width: 500px;
+        background-color: #DDD;
+        border: 2px solid #888;
+        padding: 10px;
+        margin-top: 20px;
+    }
+    .parking-slot {
+        height: 100px;
+        width: 50px;
+        background-color: #777;
+        margin: 5px;
+        border-radius: 5px;
+        border: 1px solid #444;
+        box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+        font-size: 18px;
+        font-weight: bold;
+        color: #FFF;
+    }
+
+
+
+</style>
+
 <body>
-<div class="parking-house">
-    <div class="parking-spot"></div>
-    <div class="parking-spot"></div>
-    <div class="parking-spot"></div>
-    <div class="parking-spot"></div>
-</div>
 
 <div class="car-type">
     <button class="normal-car-btn">Normal Car</button>
@@ -24,17 +52,47 @@
     <div class="modal-content">
         <h2>Enter Car Details</h2>
         <form>
-            <label for="weight">Weight:</label>
-            <input type="number" id="weight" name="weight" required>
 
-            <label for="cost">Cost:</label>
-            <input type="number" id="cost" name="cost" required>
+            <label for="value">Value:</label>
+            <input type="number" id="value" name="value" required>
 
-            <button type="submit" id="submit-btn">Submit</button>
+            <label for="capacity">Capacity:</label>
+            <input type="number" id="capacity" name="capacity" required>
+
+            <label for="power">Power:</label>
+            <input type="number" id="power" name="power" required>
+
+            <label for="Id">ID:</label>
+            <input type="number" id="Id" name="Id" required>
+
+            <label for="color">Color:</label>
+            <input type="text" id="color" name="color" required>
+
+
+            <div id="topspeed-field" style="display: none;">
+                <label for="topspeed">Topspeed:</label>
+                <input type="number" id="topspeed" name="topspeed" required>
+            </div>
+                <button type="submit" id="submit-btn">Submit</button>
+
         </form>
+
+    </div>
+    <div class="parking-house">
+<!--        <div class="parking-slot">-->
+<!--            <div class="vehicle"></div>-->
+<!--            <div class="number">1</div>-->
+
+<!--        </div>-->
+
+
     </div>
 </div>
 
-<script src="script.js"></script>
+<!--<script type="module" src="Warehouse.js"></script>-->
+<!--<script type="module" src="Vehicle.js"></script>-->
+<script type="module" src="script.js"></script>
+
+
 </body>
 </html>

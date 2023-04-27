@@ -2,7 +2,7 @@ import {Car, RaceCar} from "./Vehicle";
 
 export class Warehouse {
     private readonly _capacity: number;
-    private _parkingSlot: Car[] = [];
+    private _parkingSlot: Car[] | RaceCar[]= [];
 
     constructor(capacity: number) {
         this._capacity = capacity;
@@ -14,6 +14,7 @@ export class Warehouse {
      */
     // your method
     public parkCar (car: Car | RaceCar) {
+        // @ts-ignore
         this._parkingSlot.push(car);
         console.log("Car Parked!");
     }
@@ -38,6 +39,7 @@ export class Warehouse {
         const tmpCar = this._parkingSlot[index];
 
         // By adding undefined to this index, the parking slots will not be shifted.
+        // @ts-ignore
         this._parkingSlot[index] = undefined;
         return tmpCar;
     }

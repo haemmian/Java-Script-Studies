@@ -1,3 +1,18 @@
 body {
     background-color: #737373;
 }
+label {
+    display: block;
+    margin-top: 1rem;
+}
+.number {
+    margin-bottom: 5px;
+}
+
+.vehicle {
+    height: 100px;
+    width: 40px;
+    background-color: dimgray;
+    border: 3px solid black ;
+    /*margin-bottom: 10px; !* adjust this value to center the vehicle on top of the parking slot *!*/
+}
