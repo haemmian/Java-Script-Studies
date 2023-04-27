@@ -7,7 +7,6 @@ const warehouse: Warehouse = new Warehouse(Number(prompt("Capacity of this Wareh
 
 //UI Version of this Project
 const parkhouse: Element | null = document.querySelector(".parking-house");
-const parkslot: Element | null = document.querySelector(".parking-slot");
 const normalCarBtn: Element | null = document.querySelector(".normal-car-btn");
 const raceCarBtn: Element | null = document.querySelector(".race-car-btn");
 const submitBtn: Element | null = document.getElementById("submit-btn");
@@ -17,12 +16,14 @@ const form = document.querySelector('form');
 const inputs = form?.querySelectorAll('input');
 
 
-function parkCar (vehicleColor: string) {
+function parkCar (vehicleColor: string, index: number) {
+    const parkingSlot = document.querySelectorAll('.parking-slot')[index];
+
     const vehicle =document.createElement("div");
     vehicle.classList.add("vehicle");
-    vehicle.style.color = vehicleColor;
+    vehicle.style.backgroundColor = vehicleColor;
 
-    (<HTMLInputElement>parkslot).appendChild(vehicle);
+    (<HTMLInputElement>parkingSlot).appendChild(vehicle);
 }
 function emptyInputs () {
     inputs?.forEach(input => {
@@ -66,13 +67,19 @@ submitBtn?.addEventListener("click", function () {
 
         if ((<HTMLInputElement>normalCarBtn).style.backgroundColor === "salmon") {    //Normal Car
             warehouse.parkCar(new Car(value, capacity, power, id, color));
+            parkCar(color, warehouse.currentAmountOfCars()-1);
             emptyInputs();
 
 
         } else if ((<HTMLInputElement>raceCarBtn).style.backgroundColor === "salmon") {      //Race Car
             const topspeed: number = Number((<HTMLInputElement>document.getElementById("topspeed")).value);
-            topspeed != 0 ? warehouse.parkCar(new RaceCar(value, capacity, power, id, color, topspeed)): console.error("Missing Data!");
-            emptyInputs();
+            if (topspeed != 0) {
+                warehouse.parkCar(new RaceCar(value, capacity, power, id, color, topspeed));
+                parkCar(color, warehouse.currentAmountOfCars()-1);
+                emptyInputs();
+            } else {
+                console.error("Missing Data!");
+            }
 
         } else {
             console.warn("Nothing chosen");
@@ -83,7 +90,7 @@ submitBtn?.addEventListener("click", function () {
     }
 });
 
-
+parkCar("blue", 10)
 
 //
 // // console.log(`current amount of cars: ${warehouse.currentAmountOfCars()}`);

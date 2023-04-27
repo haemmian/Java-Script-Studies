@@ -50,7 +50,7 @@ export class Warehouse {
      * @return number of cars in the warehouse
      */
     // your method
-    public currentAmountOfCars () {
+    public currentAmountOfCars () :number{
         return this._parkingSlot.filter(index => index !== undefined).length;
     }
 
