@@ -9,13 +9,27 @@ export class Warehouse {
     }
 
     /**
+     * @brief gets the lowest free parking spot
+     * @return index
+     */
+    public lowestParkingIndex() : number {
+        //@ts-ignore
+        return this._parkingSlot.includes(undefined) ? this._parkingSlot.indexOf(undefined) :
+            this._parkingSlot.length;
+    }
+
+    /**
      * @brief parks a car in the warehouse
      * @param car to park
      */
     // your method
     public parkCar (car: Car | RaceCar) {
+
+        // Check if there are any free parking slots
         // @ts-ignore
-        this._parkingSlot.push(car);
+        this._parkingSlot.includes(undefined) ? this._parkingSlot.splice(
+            // @ts-ignore
+            this._parkingSlot.indexOf(undefined), 0, car) : this._parkingSlot.push(car);
         console.log("Car Parked!");
     }
 
@@ -25,7 +39,7 @@ export class Warehouse {
      * @return the car at specified index
      */
     // your method
-    public getCar (index: number) {
+    public getCar (index: number) : Car | RaceCar | undefined{
         if (!this._parkingSlot.length) {
             console.log("No cars are in the warehouse");
             return undefined;
@@ -35,7 +49,7 @@ export class Warehouse {
             return undefined;
         }
 
-        console.log(`Get car at parking slot ${index}`);
+        console.log(`Get car at parking slot ${index + 1}`);
         const tmpCar = this._parkingSlot[index];
 
         // By adding undefined to this index, the parking slots will not be shifted.
@@ -43,7 +57,6 @@ export class Warehouse {
         this._parkingSlot[index] = undefined;
         return tmpCar;
     }
-
 
     /**
      * @brief gets the number of cars in the warehouse
@@ -82,6 +95,6 @@ export class Warehouse {
     public getAllCarsSorted () {
         const tmpCarData = this._parkingSlot.filter(index => index !== undefined);
         this._parkingSlot = [];
-        return tmpCarData.sort((a, b) => a.vehicleRegistrationNumber() - b.vehicleRegistrationNumber());
+        return tmpCarData.sort((a, b) => a.getRegistrationNumber() - b.getRegistrationNumber());
     }
 }

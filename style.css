@@ -16,3 +16,24 @@ label {
     background-color: #333333;
     /*margin-bottom: 10px; !* adjust this value to center the vehicle on top of the parking slot *!*/
 }
+
+.item {
+    width: 100%;
+}
+.modal-content {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.modal-content > div {
+    flex: 50%; /* or - flex: 0 50% - or - flex-basis: 50% - */
+    /*demo*/
+    margin-bottom: 10px;
+}
+
+.car-information {
+    /*visibility: hidden;*/
+}
+.vehicle-topspeed {
+    /*visibility: hidden;*/
+}

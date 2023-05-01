@@ -4,13 +4,25 @@ export class Warehouse {
         this._capacity = capacity;
     }
     /**
+     * @brief gets the lowest free parking spot
+     * @return index
+     */
+    lowestParkingIndex() {
+        //@ts-ignore
+        return this._parkingSlot.includes(undefined) ? this._parkingSlot.indexOf(undefined) :
+            this._parkingSlot.length;
+    }
+    /**
      * @brief parks a car in the warehouse
      * @param car to park
      */
     // your method
     parkCar(car) {
+        // Check if there are any free parking slots
         // @ts-ignore
-        this._parkingSlot.push(car);
+        this._parkingSlot.includes(undefined) ? this._parkingSlot.splice(
+        // @ts-ignore
+        this._parkingSlot.indexOf(undefined), 0, car) : this._parkingSlot.push(car);
         console.log("Car Parked!");
     }
     /**
@@ -28,7 +40,7 @@ export class Warehouse {
             console.log(`There is no Car at parking slot ${index}`);
             return undefined;
         }
-        console.log(`Get car at parking slot ${index}`);
+        console.log(`Get car at parking slot ${index + 1}`);
         const tmpCar = this._parkingSlot[index];
         // By adding undefined to this index, the parking slots will not be shifted.
         // @ts-ignore
@@ -69,6 +81,6 @@ export class Warehouse {
     getAllCarsSorted() {
         const tmpCarData = this._parkingSlot.filter(index => index !== undefined);
         this._parkingSlot = [];
-        return tmpCarData.sort((a, b) => a.vehicleRegistrationNumber() - b.vehicleRegistrationNumber());
+        return tmpCarData.sort((a, b) => a.getRegistrationNumber() - b.getRegistrationNumber());
     }
 }

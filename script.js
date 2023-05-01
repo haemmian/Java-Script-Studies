@@ -6,9 +6,8 @@ const parkhouse = document.querySelector(".parking-house");
 const normalCarBtn = document.querySelector(".normal-car-btn");
 const raceCarBtn = document.querySelector(".race-car-btn");
 const submitBtn = document.getElementById("submit-btn");
+const getCarBtn = document.getElementById("index-btn");
 const topspeedArea = document.getElementById("topspeed-field");
-const form = document.querySelector('form');
-const inputs = form === null || form === void 0 ? void 0 : form.querySelectorAll('input');
 function parkCar(vehicleColor, index) {
     const parkingSlot = document.querySelectorAll('.parking-slot')[index];
     const vehicle = document.createElement("div");
@@ -16,10 +15,10 @@ function parkCar(vehicleColor, index) {
     vehicle.style.backgroundColor = vehicleColor;
     parkingSlot.appendChild(vehicle);
 }
-function emptyInputs() {
-    inputs === null || inputs === void 0 ? void 0 : inputs.forEach(input => {
-        input.value = " ";
-    });
+function getCar(index) {
+    var _a;
+    const parkingSlot = document.querySelectorAll('.parking-slot')[index];
+    (_a = parkingSlot.querySelector(".vehicle")) === null || _a === void 0 ? void 0 : _a.remove();
 }
 for (let i = 1; i < warehouse.capacity() + 1; i++) {
     const parkingSlot = document.createElement('div');
@@ -41,24 +40,25 @@ raceCarBtn === null || raceCarBtn === void 0 ? void 0 : raceCarBtn.addEventListe
     topspeedArea.style.display = "block";
 });
 submitBtn === null || submitBtn === void 0 ? void 0 : submitBtn.addEventListener("click", function () {
+    var _a, _b;
     const value = Number(document.getElementById("value").value);
     const capacity = Number(document.getElementById("capacity").value);
     const power = Number(document.getElementById("power").value);
     const id = Number(document.getElementById("Id").value);
     const color = document.getElementById("color").value;
     if (value && capacity && power && id && color != null) {
-        // code to be executed if all variables have a value
+        // code-block executed if all variables have a value
         if (normalCarBtn.style.backgroundColor === "salmon") { //Normal Car
             warehouse.parkCar(new Car(value, capacity, power, id, color));
             parkCar(color, warehouse.currentAmountOfCars() - 1);
-            emptyInputs();
+            (_a = document.querySelector("form")) === null || _a === void 0 ? void 0 : _a.reset();
         }
         else if (raceCarBtn.style.backgroundColor === "salmon") { //Race Car
             const topspeed = Number(document.getElementById("topspeed").value);
             if (topspeed != 0) {
                 warehouse.parkCar(new RaceCar(value, capacity, power, id, color, topspeed));
                 parkCar(color, warehouse.currentAmountOfCars() - 1);
-                emptyInputs();
+                (_b = document.querySelector("form")) === null || _b === void 0 ? void 0 : _b.reset();
             }
             else {
                 console.error("Missing Data!");
@@ -72,39 +72,22 @@ submitBtn === null || submitBtn === void 0 ? void 0 : submitBtn.addEventListener
         console.error("Missing Data!");
     }
 });
-parkCar("blue", 10);
-//
-// // console.log(`current amount of cars: ${warehouse.currentAmountOfCars()}`);
-// // const car4 = warehouse.getCar(1);
-// // console.log(`current amount of cars: ${warehouse.currentAmountOfCars()}`);
-// //
-// // console.log(`Capacity: ${warehouse.capacity()} `)
-//
-//
-//
-// //** TASK 7 **
-// //In the main file, mock the warehouse usage by adding three cars:
-// const BMW: Car = new Car(50000, 5, 200, 445445, "black");
-// const Audi: Car = new Car(45000, 5, 180, 987654, "turquoise");
-// const Ferrari: RaceCar = new RaceCar(200000, 2, 400, 111777, "red", 300);
-//
-// warehouse.parkCar(BMW);
-// warehouse.parkCar(Audi);
-// warehouse.parkCar(Ferrari);
-//
-// /**
-//  * After storing those three cars, retrieve them again by calling the method, that returns the cars
-//  * sorted by registration number. To verify the order, log the cars to the console.
-//  */
-// console.log(`List of all returned car (sorted): ${warehouse.getAllCarsSorted()}`)
-//
-// /**
-//  * Then, retrieve the car "Audi" from the warehouse, by calling the method, that returns the car at a given index.
-//  * To verify that you really retrieved the Audi, log its properties to the console.
-//  */
-//
-// warehouse.parkCar(BMW);
-// warehouse.parkCar(Audi);
-// warehouse.parkCar(Ferrari);
-//
-// console.log(`Retrieved Audi: ${warehouse.getCar(1)}`)
+//get Car
+getCarBtn === null || getCarBtn === void 0 ? void 0 : getCarBtn.addEventListener("click", function () {
+    const index = Number(document.getElementById("index").value) < 0 ? 0 :
+        Number(document.getElementById("index").value) - 1;
+    const receivedVehicle = warehouse.getCar(index);
+    getCar(index);
+    document.querySelector(".vehicle-value").textContent = String(receivedVehicle === null || receivedVehicle === void 0 ? void 0 : receivedVehicle.getValue());
+    document.querySelector(".vehicle-capacity").textContent = String(receivedVehicle === null || receivedVehicle === void 0 ? void 0 : receivedVehicle.getCapacity());
+    document.querySelector(".vehicle-power").textContent = String(receivedVehicle === null || receivedVehicle === void 0 ? void 0 : receivedVehicle.getPower());
+    document.querySelector(".vehicle-id").textContent = String(receivedVehicle === null || receivedVehicle === void 0 ? void 0 : receivedVehicle.getRegistrationNumber());
+    document.querySelector(".vehicle-color").textContent = String(receivedVehicle === null || receivedVehicle === void 0 ? void 0 : receivedVehicle.getColor());
+    if (receivedVehicle instanceof RaceCar) {
+        document.querySelector(".vehicle-topspeed").style.display = "block";
+        document.querySelector(".vehicle-topspeed").value = String(receivedVehicle === null || receivedVehicle === void 0 ? void 0 : receivedVehicle.getTopspeed());
+    }
+    else {
+        document.querySelector(".vehicle-topspeed").style.display = "none";
+    }
+});

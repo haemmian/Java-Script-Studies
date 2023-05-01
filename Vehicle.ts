@@ -22,10 +22,21 @@ export class Car {
             `color: ${this._color}`;
     }
 
-    public vehicleRegistrationNumber () {
+    public getValue () : number {
+        return this._value;
+    }
+    public getCapacity () : number {
+        return this._capacity;
+    }
+    public getPower () : number {
+        return this._power;
+    }
+    public getRegistrationNumber () {
         return this._Id;
     }
-
+    public getColor () : string {
+        return this._color;
+    }
 }
 
 export class RaceCar extends Car {
@@ -34,6 +45,11 @@ export class RaceCar extends Car {
      super(value, capacity, power, Id, color);
      this._topSpeed = topSpeed
  }
+
+ public getTopspeed () : number {
+     return this._topSpeed;
+ }
+
     public toString(): string {
         return `\nvalue: ${this._value}$\t` +
             `capacity: ${this._capacity}\t` +

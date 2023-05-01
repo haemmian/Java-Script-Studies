@@ -13,14 +13,29 @@ export class Car {
             `Id: ${this._Id}\t` +
             `color: ${this._color}`;
     }
-    vehicleRegistrationNumber() {
+    getValue() {
+        return this._value;
+    }
+    getCapacity() {
+        return this._capacity;
+    }
+    getPower() {
+        return this._power;
+    }
+    getRegistrationNumber() {
         return this._Id;
+    }
+    getColor() {
+        return this._color;
     }
 }
 export class RaceCar extends Car {
     constructor(value, capacity, power, Id, color, topSpeed) {
         super(value, capacity, power, Id, color);
         this._topSpeed = topSpeed;
+    }
+    getTopspeed() {
+        return this._topSpeed;
     }
     toString() {
         return `\nvalue: ${this._value}$\t` +

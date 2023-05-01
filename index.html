@@ -48,34 +48,60 @@
     <button class="race-car-btn">Race Car</button>
 </div>
 
+
 <div class="modal">
     <div class="modal-content">
+        <div class="item">
         <h2>Enter Car Details</h2>
-        <form>
+            <form>
 
-            <label for="value">Value:</label>
-            <input type="number" id="value" name="value" required>
+                <label for="value">Value:</label>
+                <input type="number" id="value" name="value" required>
 
-            <label for="capacity">Capacity:</label>
-            <input type="number" id="capacity" name="capacity" required>
+                <label for="capacity">Capacity:</label>
+                <input type="number" id="capacity" name="capacity" required>
 
-            <label for="power">Power:</label>
-            <input type="number" id="power" name="power" required>
+                <label for="power">Power:</label>
+                <input type="number" id="power" name="power" required>
 
-            <label for="Id">ID:</label>
-            <input type="number" id="Id" name="Id" required>
+                <label for="Id">ID:</label>
+                <input type="number" id="Id" name="Id" required>
 
-            <label for="color">Color:</label>
-            <input type="text" id="color" name="color" required>
+                <label for="color">Color:</label>
+                <input type="text" id="color" name="color" required>
 
+                <div id="topspeed-field" style="display: none;">
+                    <label for="topspeed">Topspeed:</label>
+                    <input type="number" id="topspeed" name="topspeed" required>
+                </div>
+                <div>
+                    <button type="submit" id="submit-btn">Submit</button>
+                </div>
 
-            <div id="topspeed-field" style="display: none;">
-                <label for="topspeed">Topspeed:</label>
-                <input type="number" id="topspeed" name="topspeed" required>
+            </form>
+        </div >
+
+        <div class="item">
+            <h2>Tools</h2>
+            <form>
+                <label for="index">parking Number:</label>
+                <input type="number" id="index" name="index">
+                <button type="button" id="index-btn">get Car</button>
+            </form>
+            <h3 class="car-information">Car information</h3>
+            <div class="car-information">
+                <ul id="vehicle-list">
+                    <li><span>Value:</span> <span class="vehicle-value"></span></li>
+                    <li><span>Capacity:</span> <span class="vehicle-capacity"></span></li>
+                    <li><span>Power:</span> <span class="vehicle-power"></span></li>
+                    <li><span>ID:</span> <span class="vehicle-id"></span></li>
+                    <li><span>Color:</span> <span class="vehicle-color"></span></li>
+                    <li><span>Topspeed:</span> <span class="vehicle-topspeed"></span></li>
+                </ul>
+
             </div>
-                <button type="submit" id="submit-btn">Submit</button>
 
-        </form>
+        </div>
 
     </div>
     <h2>Warehouse</h2>
