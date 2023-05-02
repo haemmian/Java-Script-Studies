@@ -50,14 +50,14 @@ submitBtn === null || submitBtn === void 0 ? void 0 : submitBtn.addEventListener
         // code-block executed if all variables have a value
         if (normalCarBtn.style.backgroundColor === "salmon") { //Normal Car
             warehouse.parkCar(new Car(value, capacity, power, id, color));
-            parkCar(color, warehouse.currentAmountOfCars() - 1);
+            parkCar(color, warehouse.lowestParkingIndex() - 1);
             (_a = document.querySelector("form")) === null || _a === void 0 ? void 0 : _a.reset();
         }
         else if (raceCarBtn.style.backgroundColor === "salmon") { //Race Car
             const topspeed = Number(document.getElementById("topspeed").value);
             if (topspeed != 0) {
                 warehouse.parkCar(new RaceCar(value, capacity, power, id, color, topspeed));
-                parkCar(color, warehouse.currentAmountOfCars() - 1);
+                parkCar(color, warehouse.lowestParkingIndex() - 1);
                 (_b = document.querySelector("form")) === null || _b === void 0 ? void 0 : _b.reset();
             }
             else {

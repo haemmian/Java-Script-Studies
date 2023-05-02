@@ -1,6 +1,7 @@
 import { Warehouse } from "./Warehouse";
 import { Car, RaceCar } from "./Vehicle"
 
+
 const warehouse: Warehouse = new Warehouse(Number(prompt("Capacity of this Warehouse: ")));
 
 //UI Version of this Project
@@ -61,14 +62,14 @@ submitBtn?.addEventListener("click", function () {
 
         if ((<HTMLInputElement>normalCarBtn).style.backgroundColor === "salmon") {    //Normal Car
             warehouse.parkCar(new Car(value, capacity, power, id, color));
-            parkCar(color, warehouse.currentAmountOfCars()-1);
+            parkCar(color, warehouse.lowestParkingIndex()-1);
             document.querySelector("form")?.reset();
 
         } else if ((<HTMLInputElement>raceCarBtn).style.backgroundColor === "salmon") {      //Race Car
             const topspeed: number = Number((<HTMLInputElement>document.getElementById("topspeed")).value);
             if (topspeed != 0) {
                 warehouse.parkCar(new RaceCar(value, capacity, power, id, color, topspeed));
-                parkCar(color, warehouse.currentAmountOfCars()-1);
+                parkCar(color, warehouse.lowestParkingIndex()-1);
                 document.querySelector("form")?.reset();
             } else {
                 console.error("Missing Data!");
