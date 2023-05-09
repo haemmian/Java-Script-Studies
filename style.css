@@ -1,12 +1,25 @@
 body {
     background-color: #737373;
 }
+
 label {
     display: block;
     margin-top: 1rem;
 }
 .number {
     margin-bottom: 5px;
+}
+ul#vehicle-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul#vehicle-list li {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 60%;
+    margin-bottom: 10px;
 }
 
 .vehicle {
@@ -19,6 +32,7 @@ label {
 
 .item {
     width: 100%;
+    /*visibility: hidden;*/
 }
 .modal-content {
     display: flex;
@@ -31,9 +45,102 @@ label {
     margin-bottom: 10px;
 }
 
-.car-information {
-    /*visibility: hidden;*/
+/* The switch - the box around the slider */
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 192px;
+    height: 34px;
 }
-.vehicle-topspeed {
-    /*visibility: hidden;*/
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+/* The slider round */
+.slider.round {
+    border-radius: 34px;
+}
+
+/* The slider before */
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+/* The slider after */
+.slider:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+}
+
+/* The round slider after */
+.slider.round:after {
+    border-radius: 50%;
+}
+
+/* Checked state of the slider */
+input:checked + .slider {
+    background-color: #2196F3;
+}
+input:not(:checked) + .slider:after {
+    content: "Normal Car";
+    text-align: center;
+    -webkit-text-fill-color: black;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(156px);
+    -ms-transform: translateX(156px);
+    transform: translateX(156px);
+}
+
+input:checked + .slider:after {
+    content: "Race Car";
+}
+
+/* Unchecked state of the slider */
+/*input + .slider:before {*/
+/*    content: "Normal Car";*/
+/*}*/
+
+.switch-text {
+    position: absolute;
+    /*top: 50%;*/
+    /*left: 50%;*/
+    /*transform: translate(-50%, -50%);*/
+    color: #000;
+    font-size: 12px;
+    font-weight: bold;
+    pointer-events: none;
 }

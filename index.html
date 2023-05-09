@@ -20,6 +20,7 @@
         padding: 10px;
         margin-top: 20px;
     }
+
     .parking-slot {
         height: 100px;
         width: 50px;
@@ -27,7 +28,7 @@
         margin: 5px;
         border-radius: 5px;
         border: 1px solid #444;
-        box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
         display: flex;
         flex-direction: column;
         justify-content: start;
@@ -36,47 +37,45 @@
         font-weight: bold;
         color: #FFF;
     }
-
 </style>
-
 <body>
-
-<div class="car-type">
-    <button class="normal-car-btn">Normal Car</button>
-    <button class="race-car-btn">Race Car</button>
-</div>
+<!-- Rounded switch -->
+<label class="switch">
+    <input class="checker" type="checkbox">
+    <span class="slider"></span>
+</label>
 
 <div class="modal">
     <div class="modal-content">
         <div class="item">
-        <h2>Enter Car Details</h2>
+            <h2>Enter Car Details</h2>
             <form>
 
                 <label for="value">Value:</label>
-                <input type="number" id="value" name="value" required>
+                <input type="number" id="value" class="numeric-input" pattern="\d*" name="value" required>
 
                 <label for="capacity">Capacity:</label>
-                <input type="number" id="capacity" name="capacity" required>
+                <input type="number" id="capacity" class="numeric-input" name="capacity" required>
 
                 <label for="power">Power:</label>
-                <input type="number" id="power" name="power" required>
+                <input type="number" id="power" class="numeric-input" name="power" required>
 
                 <label for="Id">ID:</label>
-                <input type="number" id="Id" name="Id" required>
+                <input type="number" id="Id" class="numeric-input" name="Id" required>
 
                 <label for="color">Color:</label>
                 <input type="text" id="color" name="color" required>
 
                 <div id="topspeed-field" style="display: none;">
                     <label for="topspeed">Topspeed:</label>
-                    <input type="number" id="topspeed" name="topspeed" required>
+                    <input type="number" id="topspeed" class="numeric-input" name="topspeed" required>
                 </div>
                 <div>
                     <button type="submit" id="submit-btn">Submit</button>
                 </div>
 
             </form>
-        </div >
+        </div>
 
         <div class="item">
             <h2>Tools</h2>
@@ -104,15 +103,11 @@
     <h2>Warehouse</h2>
     <div class="parking-house">
 <!--        <div class="parking-slot">-->
-<!--            <div class="vehicle"></div>-->
+<!--            <button class="vehicle"></button>-->
 <!--            <div class="number">1</div>-->
-
-<!--        </div>-->
+        </div>
     </div>
-</div>
 
-<!--<script type="module" src="Warehouse.js"></script>-->
-<!--<script type="module" src="Vehicle.js"></script>-->
 <script type="module" src="script.js"></script>
 
 </body>

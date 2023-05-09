@@ -4,7 +4,7 @@ export class Warehouse {
         this._capacity = capacity;
     }
     /**
-     * @brief gets the lowest free parking spot
+     * @brief gets the index of the lowest free parking spot
      * @return index
      */
     lowestParkingIndex() {
@@ -16,7 +16,6 @@ export class Warehouse {
      * @brief parks a car in the warehouse
      * @param car to park
      */
-    // your method
     parkCar(car) {
         // Check if there are any free parking slots
         // @ts-ignore
@@ -30,7 +29,6 @@ export class Warehouse {
      * @param index of the parked car
      * @return the car at specified index
      */
-    // your method
     getCar(index) {
         if (!this._parkingSlot.length) {
             console.log("No cars are in the warehouse");
@@ -48,10 +46,17 @@ export class Warehouse {
         return tmpCar;
     }
     /**
+     * @brief copies the data of a Car at the given index
+     * @param index of the parked car
+     * @return the copy of a car at given index
+     */
+    getData(index) {
+        return this._parkingSlot[index];
+    }
+    /**
      * @brief gets the number of cars in the warehouse
      * @return number of cars in the warehouse
      */
-    // your method
     currentAmountOfCars() {
         return this._parkingSlot.filter(index => index !== undefined).length;
     }
@@ -59,7 +64,6 @@ export class Warehouse {
      * @brief gets the warehouse's capacity
      * @return warehouse's capacity
      */
-    // your method
     capacity() {
         return this._capacity;
     }
@@ -67,7 +71,6 @@ export class Warehouse {
      * @brief get all cars
      * @return all cars
      */
-    // your method
     getAllCars() {
         const tmpCarData = this._parkingSlot.filter(index => index !== undefined);
         this._parkingSlot = [];
@@ -77,7 +80,6 @@ export class Warehouse {
      * @brief get all cars but sorted by registration number
      * @return all cars
      */
-    // your method
     getAllCarsSorted() {
         const tmpCarData = this._parkingSlot.filter(index => index !== undefined);
         this._parkingSlot = [];
