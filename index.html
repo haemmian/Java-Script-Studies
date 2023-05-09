@@ -52,24 +52,26 @@
             <form>
 
                 <label for="value">Value:</label>
-                <input onkeydown="return /[0-9]/i.test(event.key) || event.ctrlKey || event.keyCode== 9 || event.keyCode==8" id="value" class="numeric-input" pattern="\d*" name="value" required>
+                <input onkeydown="return /\d/i.test(event.key) || event.ctrlKey || event.keyCode== 9 || event.keyCode==8" id="value" class="numeric-input" pattern="\d*" name="value" required>
 
                 <label for="capacity">Capacity:</label>
-                <input onkeydown="return /[0-9]/i.test(event.key) || event.ctrlKey || event.keyCode==9 || event.keyCode==8" id="capacity" class="numeric-input" name="capacity" required>
+                <input onkeydown="return /\d/i.test(event.key) || event.ctrlKey || event.keyCode==9 || event.keyCode==8" id="capacity" class="numeric-input" name="capacity" required>
 
                 <label for="power">Power:</label>
-                <input onkeydown="return /[0-9]/i.test(event.key) || event.ctrlKey || event.keyCode==9 || event.keyCode==8" id="power" class="numeric-input" name="power" required>
+                <input onkeydown="return /\d/i.test(event.key) || event.ctrlKey || event.keyCode==9 || event.keyCode==8" id="power" class="numeric-input" name="power" required>
 
                 <label for="Id">ID:</label>
-                <input onkeydown="return /[0-9]/i.test(event.key) || event.ctrlKey || event.keyCode==9 || event.keyCode==8" id="Id" class="numeric-input" name="Id" required>
-
-                <label for="color">Color:</label>
-                <input onkeydown="return /[a-z]/i.test(event.key) || event.ctrlKey || event.keyCode==9 || event.keyCode==8" id="color" name="color" required>
+                <input type="text" id="Id" class="numeric-input" name="Id"  required>
 
                 <div id="topspeed-field" style="display: none;">
                     <label for="topspeed">Topspeed:</label>
-                    <input onkeydown="return /[0-9]/i.test(event.key) || event.ctrlKey || event.keyCode==9 || event.keyCode==8" id="topspeed" class="numeric-input" name="topspeed" required>
+                    <input onkeydown="return /\d/i.test(event.key) || event.ctrlKey || event.keyCode==9 || event.keyCode==8" id="topspeed" class="numeric-input" name="topspeed" required>
                 </div>
+
+                <label for="color">Color:</label>
+                <input type="color" id="color" name="color" required>
+
+
                 <div>
                     <button type="submit" id="submit-btn">Submit</button>
                 </div>
@@ -81,7 +83,7 @@
             <h2>Tools</h2>
             <form>
                 <label for="index">parking Number:</label>
-                <input onkeydown="return /[0-9]/i.test(event.key) || event.ctrlKey || event.keyCode==9 || event.keyCode==8" id="index" name="index">
+                <input onkeydown="return /\d/i.test(event.key) || event.ctrlKey || event.keyCode==9 || event.keyCode==8" id="index" name="index">
                 <button type="button" id="index-btn">get Car</button>
             </form>
             <h3 class="car-information">Car information</h3>

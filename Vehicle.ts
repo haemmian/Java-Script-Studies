@@ -2,11 +2,11 @@ export class Car {
     protected readonly _value: number;
     protected readonly _capacity: number;
     protected readonly _power: number;
-    protected readonly _Id: number;
+    protected readonly _Id: string;
     protected readonly _color: string;
 
 
-    constructor(value: number, capacity: number, power: number, Id: number, color: string) {
+    constructor(value: number, capacity: number, power: number, Id: string, color: string) {
         this._value = value;
         this._capacity = capacity;
         this._power = power;
@@ -31,7 +31,7 @@ export class Car {
     public getPower () : number {
         return this._power;
     }
-    public getRegistrationNumber () {
+    public getRegistrationNumber () : string {
         return this._Id;
     }
     public getColor () : string {
@@ -41,7 +41,8 @@ export class Car {
 
 export class RaceCar extends Car {
     private readonly _topSpeed;
- constructor(value: number, capacity: number, power: number, Id: number, color: string, topSpeed: number) {
+
+    constructor(value: number, capacity: number, power: number, Id: string, color: string, topSpeed: number) {
      super(value, capacity, power, Id, color);
      this._topSpeed = topSpeed
  }

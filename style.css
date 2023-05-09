@@ -44,6 +44,9 @@ ul#vehicle-list li {
     /*demo*/
     margin-bottom: 10px;
 }
+#submit-btn {
+    margin-top: 10px;
+}
 
 /* The switch - the box around the slider */
 

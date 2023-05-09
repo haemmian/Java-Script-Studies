@@ -94,15 +94,20 @@ parkingSlotGroup === null || parkingSlotGroup === void 0 ? void 0 : parkingSlotG
 // Park Car
 submitBtn === null || submitBtn === void 0 ? void 0 : submitBtn.addEventListener("click", function () {
     var _a, _b;
-    if ((warehouse.capacity() + 1) == warehouse.currentAmountOfCars()) {
+    if ((warehouse.capacity()) == warehouse.currentAmountOfCars()) {
         alert("max. Capacity reached");
         return;
     }
     const value = Number(document.getElementById("value").value);
     const capacity = Number(document.getElementById("capacity").value);
     const power = Number(document.getElementById("power").value);
-    const id = Number(document.getElementById("Id").value);
+    const id = document.getElementById("Id").value;
     const color = document.getElementById("color").value.toLowerCase();
+    const regEx = /[A-Z]+\d{1,6}$/;
+    if (!regEx.test(id)) { //Check if the Id of the Car is correct
+        alert("wrong Car identification Number");
+        return;
+    }
     if (value && capacity && power && id && color != null) {
         // code-block executed if all variables have a value
         if (carType.checked) { //Race Car

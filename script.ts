@@ -109,15 +109,21 @@ parkingSlotGroup?.addEventListener("click", function (event) {
 
 // Park Car
 submitBtn?.addEventListener("click", function () {
-    if((warehouse.capacity() + 1) == warehouse.currentAmountOfCars()) {
+    if((warehouse.capacity()) == warehouse.currentAmountOfCars()) {
         alert("max. Capacity reached");
         return;
     }
     const value: number = Number((<HTMLInputElement>document.getElementById("value")).value);
     const capacity: number = Number((<HTMLInputElement>document.getElementById("capacity")).value);
     const power: number = Number((<HTMLInputElement>document.getElementById("power")).value);
-    const id: number = Number((<HTMLInputElement>document.getElementById("Id")).value);
+    const id: string = (<HTMLInputElement>document.getElementById("Id")).value;
     const color: string = (<HTMLInputElement>document.getElementById("color")).value.toLowerCase();
+    const regEx: RegExp = /[A-Z]+\d{1,6}$/;
+
+    if(!regEx.test(id)) { //Check if the Id of the Car is correct
+        alert("wrong Car identification Number");
+        return;
+    }
 
     if (value && capacity && power && id && color != null) {
         // code-block executed if all variables have a value
