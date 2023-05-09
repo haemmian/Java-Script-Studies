@@ -113,7 +113,7 @@ submitBtn === null || submitBtn === void 0 ? void 0 : submitBtn.addEventListener
                 (_a = document.querySelector("form")) === null || _a === void 0 ? void 0 : _a.reset();
             }
             else {
-                alert("Missing Data!");
+                alert("Missing or wrong Data!");
             }
         }
         else { //Normal Car

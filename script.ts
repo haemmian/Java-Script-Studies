@@ -129,7 +129,7 @@ submitBtn?.addEventListener("click", function () {
                 parkCar(color, warehouse.lowestParkingIndex() - 1);
                 document.querySelector("form")?.reset();
             } else {
-                alert("Missing Data!");
+                alert("Missing or wrong Data!");
             }
 
         } else {      //Normal Car
