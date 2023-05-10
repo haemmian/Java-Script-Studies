@@ -15,7 +15,7 @@ export class Warehouse {
     public lowestParkingIndex() : number {
         //@ts-ignore
         return this._parkingSlot.includes(undefined) ? this._parkingSlot.indexOf(undefined) :
-            this._parkingSlot.length;
+            this._parkingSlot.length - 1;
     }
 
     /**
@@ -98,6 +98,6 @@ export class Warehouse {
     public getAllCarsSorted () {
         const tmpCarData = this._parkingSlot.filter(index => index !== undefined);
         this._parkingSlot = [];
-        return tmpCarData.sort((a, b) => a.getRegistrationNumber() - b.getRegistrationNumber());
+        return tmpCarData.sort((a: any, b: any) => a.getRegistrationNumber() - b.getRegistrationNumber());
     }
 }

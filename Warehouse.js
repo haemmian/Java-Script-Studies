@@ -10,7 +10,7 @@ export class Warehouse {
     lowestParkingIndex() {
         //@ts-ignore
         return this._parkingSlot.includes(undefined) ? this._parkingSlot.indexOf(undefined) :
-            this._parkingSlot.length;
+            this._parkingSlot.length - 1;
     }
     /**
      * @brief parks a car in the warehouse

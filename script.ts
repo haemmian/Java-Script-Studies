@@ -10,10 +10,12 @@ while (1) {
     if (/^$|[^0-9]/.test(capacity)) {// a Regex checker for non-Numeric Characters and empty strings
         alert("non-numeric value detected, please try again");
     } else {
+        capacity = Number(capacity) > 550000 ? 550000 : Number(capacity);
         break;
     }
 }
-const warehouse: Warehouse = new Warehouse(Number(capacity));
+// @ts-ignore
+const warehouse: Warehouse = new Warehouse(capacity);
 
 //UI Version of this Project
 const parkingSlotGroup: Element | null = document.querySelector(".parking-house");
@@ -22,7 +24,6 @@ const parkhouse: Element | null = document.querySelector(".parking-house");
 const submitBtn: Element | null = document.getElementById("submit-btn");
 const getCarBtn: Element | null = document.getElementById("index-btn");
 const topspeedArea: Element | null = document.getElementById("topspeed-field");
-
 
 // Creates the parking slots
 for (let i = 1; i < warehouse.capacity() + 1; i++) {
@@ -82,7 +83,6 @@ function showVehicle(vehicle: Car | RaceCar | undefined) {
     }
 }
 
-
 // Change car type
 carType?.addEventListener("change", function (event) {
     // @ts-ignore
@@ -95,7 +95,7 @@ carType?.addEventListener("change", function (event) {
     } else {
         (<HTMLInputElement>topspeedArea).style.display = "none";
     }
-})
+});
 
 // Get Car information
 parkingSlotGroup?.addEventListener("click", function (event) {
@@ -116,12 +116,12 @@ submitBtn?.addEventListener("click", function () {
     const value: number = Number((<HTMLInputElement>document.getElementById("value")).value);
     const capacity: number = Number((<HTMLInputElement>document.getElementById("capacity")).value);
     const power: number = Number((<HTMLInputElement>document.getElementById("power")).value);
-    const id: string = (<HTMLInputElement>document.getElementById("Id")).value;
+    const id: string = (<HTMLInputElement>document.getElementById("Id")).value.toUpperCase();
     const color: string = (<HTMLInputElement>document.getElementById("color")).value.toLowerCase();
     const regEx: RegExp = /[A-Z]+\d{1,6}$/;
 
     if(!regEx.test(id)) { //Check if the Id of the Car is correct
-        alert("wrong Car identification Number");
+        alert("wrong Car identification Number\n Hint: this is a numberplate -> Canton + 1-6 digits");
         return;
     }
 
@@ -132,15 +132,15 @@ submitBtn?.addEventListener("click", function () {
             const topspeed: number = Number((<HTMLInputElement>document.getElementById("topspeed")).value);
             if (topspeed != 0) {
                 warehouse.parkCar(new RaceCar(value, capacity, power, id, color, topspeed));
-                parkCar(color, warehouse.lowestParkingIndex() - 1);
+                parkCar(color, warehouse.lowestParkingIndex());
                 document.querySelector("form")?.reset();
             } else {
-                alert("Missing or wrong Data!");
+                alert("Topspeed missing or wrong!");
             }
 
         } else {      //Normal Car
             warehouse.parkCar(new Car(value, capacity, power, id, color));
-            parkCar(color, warehouse.lowestParkingIndex() - 1);
+            parkCar(color, warehouse.lowestParkingIndex());
             document.querySelector("form")?.reset();
         }
     } else {

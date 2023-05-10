@@ -9,10 +9,12 @@ while (1) {
         alert("non-numeric value detected, please try again");
     }
     else {
+        capacity = Number(capacity) > 550000 ? 550000 : Number(capacity);
         break;
     }
 }
-const warehouse = new Warehouse(Number(capacity));
+// @ts-ignore
+const warehouse = new Warehouse(capacity);
 //UI Version of this Project
 const parkingSlotGroup = document.querySelector(".parking-house");
 const carType = document.querySelector(".checker");
@@ -101,11 +103,11 @@ submitBtn === null || submitBtn === void 0 ? void 0 : submitBtn.addEventListener
     const value = Number(document.getElementById("value").value);
     const capacity = Number(document.getElementById("capacity").value);
     const power = Number(document.getElementById("power").value);
-    const id = document.getElementById("Id").value;
+    const id = document.getElementById("Id").value.toUpperCase();
     const color = document.getElementById("color").value.toLowerCase();
     const regEx = /[A-Z]+\d{1,6}$/;
     if (!regEx.test(id)) { //Check if the Id of the Car is correct
-        alert("wrong Car identification Number");
+        alert("wrong Car identification Number\n Hint: this is a numberplate -> Canton + 1-6 digits");
         return;
     }
     if (value && capacity && power && id && color != null) {
@@ -114,16 +116,16 @@ submitBtn === null || submitBtn === void 0 ? void 0 : submitBtn.addEventListener
             const topspeed = Number(document.getElementById("topspeed").value);
             if (topspeed != 0) {
                 warehouse.parkCar(new RaceCar(value, capacity, power, id, color, topspeed));
-                parkCar(color, warehouse.lowestParkingIndex() - 1);
+                parkCar(color, warehouse.lowestParkingIndex());
                 (_a = document.querySelector("form")) === null || _a === void 0 ? void 0 : _a.reset();
             }
             else {
-                alert("Missing or wrong Data!");
+                alert("Topspeed missing or wrong!");
             }
         }
         else { //Normal Car
             warehouse.parkCar(new Car(value, capacity, power, id, color));
-            parkCar(color, warehouse.lowestParkingIndex() - 1);
+            parkCar(color, warehouse.lowestParkingIndex());
             (_b = document.querySelector("form")) === null || _b === void 0 ? void 0 : _b.reset();
         }
     }
