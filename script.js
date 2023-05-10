@@ -59,6 +59,10 @@ function getCarfromWarehouse(index) {
  * @param vehicle
  */
 function showVehicle(vehicle) {
+    if (typeof vehicle == "undefined") {
+        console.warn(`No Car at at this parking-slot}`);
+        return;
+    }
     document.querySelector(".vehicle-value").textContent = String(vehicle === null || vehicle === void 0 ? void 0 : vehicle.getValue());
     document.querySelector(".vehicle-capacity").textContent = String(vehicle === null || vehicle === void 0 ? void 0 : vehicle.getCapacity());
     document.querySelector(".vehicle-power").textContent = String(vehicle === null || vehicle === void 0 ? void 0 : vehicle.getPower());
