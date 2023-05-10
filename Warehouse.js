@@ -9,7 +9,7 @@ export class Warehouse {
      */
     lowestParkingIndex() {
         //@ts-ignore
-        return this._parkingSlot.includes(undefined) ? this._parkingSlot.indexOf(undefined) :
+        return this._parkingSlot.includes(undefined) ? this._parkingSlot.indexOf(undefined) - 1 :
             this._parkingSlot.length - 1;
     }
     /**

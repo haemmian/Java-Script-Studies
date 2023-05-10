@@ -110,12 +110,12 @@ submitBtn === null || submitBtn === void 0 ? void 0 : submitBtn.addEventListener
     const id = document.getElementById("Id").value.toUpperCase();
     const color = document.getElementById("color").value.toLowerCase();
     const regEx = /[A-Z]+\d{1,6}$/;
-    if (!regEx.test(id)) { //Check if the Id of the Car is correct
-        alert("wrong Car identification Number\n Hint: this is a numberplate -> Canton + 1-6 digits");
-        return;
-    }
     if (value && capacity && power && id && color != null) {
         // code-block executed if all variables have a value
+        if (!regEx.test(id)) { //Check if the Id of the Car is correct
+            alert("wrong Car identification Number\n Hint: this is a numberplate -> Canton + 1-6 digits");
+            return;
+        }
         if (carType.checked) { //Race Car
             const topspeed = Number(document.getElementById("topspeed").value);
             if (topspeed != 0) {

@@ -125,13 +125,15 @@ submitBtn?.addEventListener("click", function () {
     const color: string = (<HTMLInputElement>document.getElementById("color")).value.toLowerCase();
     const regEx: RegExp = /[A-Z]+\d{1,6}$/;
 
-    if(!regEx.test(id)) { //Check if the Id of the Car is correct
-        alert("wrong Car identification Number\n Hint: this is a numberplate -> Canton + 1-6 digits");
-        return;
-    }
+
 
     if (value && capacity && power && id && color != null) {
         // code-block executed if all variables have a value
+
+        if(!regEx.test(id)) { //Check if the Id of the Car is correct
+            alert("wrong Car identification Number\n Hint: this is a numberplate -> Canton + 1-6 digits");
+            return;
+        }
 
         if ((<HTMLInputElement>carType).checked) {    //Race Car
             const topspeed: number = Number((<HTMLInputElement>document.getElementById("topspeed")).value);
