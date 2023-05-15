@@ -113,7 +113,8 @@ parkingSlotGroup?.addEventListener("click", function (event) {
 });
 
 // Park Car
-submitBtn?.addEventListener("click", function () {
+submitBtn?.addEventListener("click", function (event) {
+    event.preventDefault(); //prevents the page to reload after a submit
     if((warehouse.capacity()) == warehouse.currentAmountOfCars()) {
         alert("max. Capacity reached");
         return;
@@ -124,8 +125,6 @@ submitBtn?.addEventListener("click", function () {
     const id: string = (<HTMLInputElement>document.getElementById("Id")).value.toUpperCase();
     const color: string = (<HTMLInputElement>document.getElementById("color")).value.toLowerCase();
     const regEx: RegExp = /[A-Z]+\d{1,6}$/;
-
-
 
     if (value && capacity && power && id && color != null) {
         // code-block executed if all variables have a value

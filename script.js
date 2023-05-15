@@ -98,8 +98,9 @@ parkingSlotGroup === null || parkingSlotGroup === void 0 ? void 0 : parkingSlotG
     }
 });
 // Park Car
-submitBtn === null || submitBtn === void 0 ? void 0 : submitBtn.addEventListener("click", function () {
+submitBtn === null || submitBtn === void 0 ? void 0 : submitBtn.addEventListener("click", function (event) {
     var _a, _b;
+    event.preventDefault(); //prevents the page to reload after a submit
     if ((warehouse.capacity()) == warehouse.currentAmountOfCars()) {
         alert("max. Capacity reached");
         return;
