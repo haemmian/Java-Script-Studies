@@ -72,7 +72,7 @@ export class Warehouse {
      */
     public getCurrentAmountOfCars () :number{
         // @ts-ignore
-        return this._parkingSlot.reduce((count: number, value: null | number) => count + (value === null ? 1 : 0), 0);
+        return this._parkingSlot.reduce((count: number, value: null | number) => count + (value === null ? 0 : 1), 0);
     }
 
     /**
