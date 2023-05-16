@@ -1,5 +1,6 @@
-import { Warehouse } from "./Warehouse.js";
-import { Car, RaceCar } from "./Vehicle.js";
+'use strict';
+import { Warehouse } from "./Warehouse";
+import { Car, RaceCar } from "./Vehicle";
 let capacity;
 // in case a non-number value is typed in.
 while (1) {
@@ -22,7 +23,7 @@ const submitBtn = document.getElementById("submit-btn");
 const getCarBtn = document.getElementById("index-btn");
 const topspeedArea = document.getElementById("topspeed-field");
 // Creates the parking slots
-for (let i = 1; i < warehouse.capacity() + 1; i++) {
+for (let i = 1; i < warehouse.getCapacity() + 1; i++) {
     const parkingSlot = document.createElement('div');
     parkingSlot.classList.add('parking-slot');
     const number = document.createElement('div');
@@ -98,7 +99,7 @@ parkingSlotGroup === null || parkingSlotGroup === void 0 ? void 0 : parkingSlotG
 submitBtn === null || submitBtn === void 0 ? void 0 : submitBtn.addEventListener("click", function (event) {
     var _a, _b;
     event.preventDefault(); //prevents the page to reload after a submit
-    if ((warehouse.capacity()) == warehouse.currentAmountOfCars()) {
+    if ((warehouse.getCapacity()) == warehouse.getCurrentAmountOfCars()) {
         alert("max. Capacity reached");
         return;
     }

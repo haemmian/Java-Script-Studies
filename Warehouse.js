@@ -58,15 +58,15 @@ export class Warehouse {
      * @brief gets the number of cars in the warehouse
      * @return number of cars in the warehouse
      */
-    currentAmountOfCars() {
+    getCurrentAmountOfCars() {
         // @ts-ignore
-        return this._parkingSlot.reduce((count, value) => count + (value === null ? 1 : 0), 0);
+        return this._parkingSlot.reduce((count, value) => count + (value === null ? 0 : 1), 0);
     }
     /**
      * @brief gets the warehouse's capacity
      * @return warehouse's capacity
      */
-    capacity() {
+    getCapacity() {
         return this._capacity;
     }
     /**
