@@ -1,3 +1,4 @@
+'use strict';
 export class Car {
     constructor(value, capacity, power, Id, color) {
         this._value = value;

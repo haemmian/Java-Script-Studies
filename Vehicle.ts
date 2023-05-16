@@ -1,3 +1,4 @@
+'use strict';
 export class Car {
     protected readonly _value: number;
     protected readonly _capacity: number;

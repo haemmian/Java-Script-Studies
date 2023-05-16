@@ -1,7 +1,8 @@
+'use strict';
 import {Warehouse} from "./Warehouse";
 import {Car, RaceCar} from "./Vehicle"
 
-let capacity;
+let capacity: any;
 
 // in case a non-number value is typed in.
 while (1) {
@@ -14,7 +15,6 @@ while (1) {
         break;
     }
 }
-// @ts-ignore
 const warehouse: Warehouse = new Warehouse(capacity);
 
 //UI Version of this Project
@@ -26,7 +26,7 @@ const getCarBtn: Element | null = document.getElementById("index-btn");
 const topspeedArea: Element | null = document.getElementById("topspeed-field");
 
 // Creates the parking slots
-for (let i = 1; i < warehouse.capacity() + 1; i++) {
+for (let i = 1; i < warehouse.getCapacity() + 1; i++) {
 
     const parkingSlot = document.createElement('div');
     parkingSlot.classList.add('parking-slot');
@@ -67,9 +67,9 @@ function getCarfromWarehouse(index: number) {
  * @brief Show vehicle-data on the Data side
  * @param vehicle
  */
-function showVehicle(vehicle: Car | RaceCar | undefined) {
+function showVehicle(vehicle: Car | RaceCar | null) {
 
-    if (typeof vehicle == "undefined") {
+    if (vehicle === null) {
         console.warn(`No Car at at this parking-slot}`);
         return;
     }
@@ -90,11 +90,9 @@ function showVehicle(vehicle: Car | RaceCar | undefined) {
 
 // Change car type
 carType?.addEventListener("change", function (event) {
-    // @ts-ignore
-    const isRaceCar: boolean = event.target?.checked;
+    const isRaceCar: boolean = (<HTMLInputElement>event.target).checked;
 
     // isRaceCar = true -> Race Care, false -> Normal Car
-
     if (isRaceCar) {
         (<HTMLInputElement>topspeedArea).style.display = "block";
     } else {
@@ -115,7 +113,7 @@ parkingSlotGroup?.addEventListener("click", function (event) {
 // Park Car
 submitBtn?.addEventListener("click", function (event) {
     event.preventDefault(); //prevents the page to reload after a submit
-    if((warehouse.capacity()) == warehouse.currentAmountOfCars()) {
+    if((warehouse.getCapacity()) == warehouse.getCurrentAmountOfCars()) {
         alert("max. Capacity reached");
         return;
     }

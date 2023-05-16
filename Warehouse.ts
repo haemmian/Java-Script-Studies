@@ -1,4 +1,5 @@
-import {Car, RaceCar} from "./Vehicle";
+'use strict';
+import {Car, RaceCar} from "./Vehicle.js";
 
 export class Warehouse {
     private readonly _capacity: number;
@@ -14,7 +15,7 @@ export class Warehouse {
      */
     public lowestParkingIndex() : number {
         //@ts-ignore
-        return this._parkingSlot.includes(undefined) ? this._parkingSlot.indexOf(undefined) -1 :
+        return this._parkingSlot.includes(null) ? this._parkingSlot.indexOf(null) -1 :
             this._parkingSlot.length - 1;
     }
 
@@ -26,9 +27,9 @@ export class Warehouse {
 
         // Check if there are any free parking slots
         // @ts-ignore
-        this._parkingSlot.includes(undefined) ? this._parkingSlot.splice(
+        this._parkingSlot.includes(null) ? this._parkingSlot.splice(
             // @ts-ignore
-            this._parkingSlot.indexOf(undefined), 0, car) : this._parkingSlot.push(car);
+            this._parkingSlot.indexOf(null), 0, car) : this._parkingSlot.push(car);
         console.log("Car Parked!");
     }
 
@@ -37,22 +38,22 @@ export class Warehouse {
      * @param index of the parked car
      * @return the car at specified index
      */
-    public getCar (index: number) : Car | RaceCar | undefined{
+    public getCar (index: number) : Car | RaceCar | null{
         if (!this._parkingSlot.length) {
             console.log("No cars are in the warehouse");
-            return undefined;
+            return null;
         }
-        if (this._parkingSlot[index] == undefined) {
+        if (this._parkingSlot[index] == null) {
             console.log(`There is no Car at parking slot ${index}`);
-            return undefined;
+            return null;
         }
 
         console.log(`Get car at parking slot ${index + 1}`);
         const tmpCar = this._parkingSlot[index];
 
-        // By adding undefined to this index, the parking slots will not be shifted.
+        // By adding null to this index, the parking slots will not be shifted.
         // @ts-ignore
-        this._parkingSlot[index] = undefined;
+        this._parkingSlot[index] = null;
         return tmpCar;
     }
 
@@ -61,7 +62,7 @@ export class Warehouse {
      * @param index of the parked car
      * @return the copy of a car at given index
      */
-    public getData (index: number) : Car | RaceCar | undefined {
+    public getData (index: number) : Car | RaceCar | null {
         return this._parkingSlot[index];
     }
 
@@ -69,15 +70,16 @@ export class Warehouse {
      * @brief gets the number of cars in the warehouse
      * @return number of cars in the warehouse
      */
-    public currentAmountOfCars () :number{
-        return this._parkingSlot.filter(index => index !== undefined).length;
+    public getCurrentAmountOfCars () :number{
+        // @ts-ignore
+        return this._parkingSlot.reduce((count: number, value: null | number) => count + (value === null ? 1 : 0), 0);
     }
 
     /**
      * @brief gets the warehouse's capacity
      * @return warehouse's capacity
      */
-    public capacity () {
+    public getCapacity () {
         return this._capacity;
     }
 
@@ -86,7 +88,7 @@ export class Warehouse {
      * @return all cars
      */
     public getAllCars () {
-        const tmpCarData = this._parkingSlot.filter(index => index !== undefined);
+        const tmpCarData = this._parkingSlot.filter(index => index !== null);
         this._parkingSlot = [];
         return  tmpCarData;
     }
@@ -96,8 +98,6 @@ export class Warehouse {
      * @return all cars
      */
     public getAllCarsSorted () {
-        const tmpCarData = this._parkingSlot.filter(index => index !== undefined);
-        this._parkingSlot = [];
-        return tmpCarData.sort((a: any, b: any) => a.getRegistrationNumber() - b.getRegistrationNumber());
+        return this.getAllCars().sort((a: any, b: any) => a.getRegistrationNumber() - b.getRegistrationNumber());
     }
 }

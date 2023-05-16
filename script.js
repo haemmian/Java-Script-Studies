@@ -13,7 +13,6 @@ while (1) {
         break;
     }
 }
-// @ts-ignore
 const warehouse = new Warehouse(capacity);
 //UI Version of this Project
 const parkingSlotGroup = document.querySelector(".parking-house");
@@ -59,7 +58,7 @@ function getCarfromWarehouse(index) {
  * @param vehicle
  */
 function showVehicle(vehicle) {
-    if (typeof vehicle == "undefined") {
+    if (vehicle === null) {
         console.warn(`No Car at at this parking-slot}`);
         return;
     }
@@ -78,9 +77,7 @@ function showVehicle(vehicle) {
 }
 // Change car type
 carType === null || carType === void 0 ? void 0 : carType.addEventListener("change", function (event) {
-    var _a;
-    // @ts-ignore
-    const isRaceCar = (_a = event.target) === null || _a === void 0 ? void 0 : _a.checked;
+    const isRaceCar = event.target.checked;
     // isRaceCar = true -> Race Care, false -> Normal Car
     if (isRaceCar) {
         topspeedArea.style.display = "block";
