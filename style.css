@@ -48,6 +48,15 @@ ul#vehicle-list li {
     margin-top: 10px;
 }
 
+/* The Reset button*/
+#reset\ Button {
+    width: auto;
+    height: 30px;
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    background-color: #ffffff;
+}
 /* The switch - the box around the slider */
 
 .switch {

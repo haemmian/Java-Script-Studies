@@ -1,17 +1,20 @@
 'use strict';
-import { Warehouse } from "./Warehouse";
-import { Car, RaceCar } from "./Vehicle";
+import { Warehouse } from "./Warehouse.js";
+import { Car, RaceCar } from "./Vehicle.js";
 let capacity;
-// in case a non-number value is typed in.
-while (1) {
-    capacity = prompt("Capacity of this Warehouse: ");
-    // @ts-ignore
-    if (/^$|[^0-9]/.test(capacity)) { // a Regex checker for non-Numeric Characters and empty strings
-        alert("non-numeric value detected, please try again");
-    }
-    else {
-        capacity = Number(capacity) > 550000 ? 550000 : Number(capacity);
-        break;
+if (storageCheck()) {
+    // in case a non-number value is typed in.
+    while (1) {
+        capacity = prompt("Capacity of this Warehouse: ");
+        // @ts-ignore
+        if (/^$|[^0-9]/.test(capacity)) { // a Regex checker for non-Numeric Characters and empty strings
+            alert("non-numeric value detected, please try again");
+        }
+        else {
+            capacity = Number(capacity) > 550000 ? 550000 : Number(capacity);
+            localStorage.setItem("capacity", capacity);
+            break;
+        }
     }
 }
 const warehouse = new Warehouse(capacity);
@@ -22,6 +25,7 @@ const parkhouse = document.querySelector(".parking-house");
 const submitBtn = document.getElementById("submit-btn");
 const getCarBtn = document.getElementById("index-btn");
 const topspeedArea = document.getElementById("topspeed-field");
+const resetBtn = document.getElementById("reset Button");
 // Creates the parking slots
 for (let i = 1; i < warehouse.getCapacity() + 1; i++) {
     const parkingSlot = document.createElement('div');
@@ -31,6 +35,13 @@ for (let i = 1; i < warehouse.getCapacity() + 1; i++) {
     number.textContent = String(i);
     parkingSlot.appendChild(number);
     parkhouse.appendChild(parkingSlot);
+    console.log(localStorage.length);
+
+    if (localStorage.getItem(`parkingSlot N.${i}`)) {
+        // @ts-ignore
+        const tmpCar = JSON.parse(localStorage.getItem(`parkingSlot N.${i}`));
+        parkCar(tmpCar["color"], i);
+    }
 }
 /**
  * @brief Adds a vehicle to the UI-side. Color and index are required.
@@ -76,6 +87,34 @@ function showVehicle(vehicle) {
         document.querySelector(".vehicle-topspeed").style.display = "none";
     }
 }
+/**
+ * @brief check whether the "user" data is stored in the web Storage and returns "true" if it is stored
+ */
+function storageCheck() {
+    if (localStorage.getItem("capacity")) {
+        // @ts-ignore
+        capacity = parseInt(localStorage.getItem("capacity"), 10);
+        return false;
+    }
+    return true;
+}
+/**
+ * @brief creates a Vehicle object and passes it to the localStorage
+ * @params parkingSlot, value, capacity, power, id, color, topSpeed
+ */
+function storeVehicleOnLocalBrowser(parkingSlot, value, capacity, power, id, color, topSpeed = 0) {
+    const vehicle = {
+        "value": value,
+        "capacity": capacity,
+        "power": power,
+        "id": id,
+        "color": color,
+        "topSpeed": topSpeed
+    };
+    console.log(parkingSlot);
+    localStorage.setItem(`parkingSlot N.${parkingSlot}`, JSON.stringify(vehicle));
+    console.log(JSON.parse(localStorage.getItem(`parkingSlot N.${parkingSlot}`)));
+}
 // Change car type
 carType === null || carType === void 0 ? void 0 : carType.addEventListener("change", function (event) {
     const isRaceCar = event.target.checked;
@@ -118,6 +157,7 @@ submitBtn === null || submitBtn === void 0 ? void 0 : submitBtn.addEventListener
         if (carType.checked) { //Race Car
             const topspeed = Number(document.getElementById("topspeed").value);
             if (topspeed != 0) {
+                storeVehicleOnLocalBrowser(warehouse.lowestParkingIndex()+1, value, capacity, power, id, color, topspeed);
                 warehouse.parkCar(new RaceCar(value, capacity, power, id, color, topspeed));
                 parkCar(color, warehouse.lowestParkingIndex());
                 (_a = document.querySelector("form")) === null || _a === void 0 ? void 0 : _a.reset();
@@ -127,6 +167,7 @@ submitBtn === null || submitBtn === void 0 ? void 0 : submitBtn.addEventListener
             }
         }
         else { //Normal Car
+            storeVehicleOnLocalBrowser(warehouse.lowestParkingIndex()+1, value, capacity, power, id, color);
             warehouse.parkCar(new Car(value, capacity, power, id, color));
             parkCar(color, warehouse.lowestParkingIndex());
             (_b = document.querySelector("form")) === null || _b === void 0 ? void 0 : _b.reset();
@@ -142,4 +183,9 @@ getCarBtn === null || getCarBtn === void 0 ? void 0 : getCarBtn.addEventListener
         Number(document.getElementById("index").value) - 1;
     getCarfromWarehouse(index);
     showVehicle(warehouse.getCar(index));
+});
+// Reset Warehouse
+resetBtn === null || resetBtn === void 0 ? void 0 : resetBtn.addEventListener("click", function () {
+    localStorage.clear();
+    location.reload();
 });
