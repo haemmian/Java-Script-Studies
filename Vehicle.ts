@@ -1,4 +1,5 @@
 'use strict';
+
 export class Car {
     protected readonly _value: number;
     protected readonly _capacity: number;
@@ -7,13 +8,21 @@ export class Car {
     protected readonly _color: string;
 
 
-    constructor(value: number, capacity: number, power: number, Id: string, color: string) {
-        this._value = value;
-        this._capacity = capacity;
-        this._power = power;
-        this._Id = Id;
-        this._color = color;
+    constructor(carData: {
+        value: number,
+        capacity: number,
+        power: number,
+        id: string,
+        color: string,
+    }) {
+        // value: number, capacity: number, power: number, Id: string, color: string
+        this._value = carData.value;
+        this._capacity = carData.capacity;
+        this._power = carData.power;
+        this._Id = carData.id;
+        this._color = carData.color;
     }
+
 
     public toString(): string {
         return `\nvalue: ${this._value}$\t` +
@@ -23,19 +32,23 @@ export class Car {
             `color: ${this._color}`;
     }
 
-    public getValue () : number {
+    public getValue(): number {
         return this._value;
     }
-    public getCapacity () : number {
+
+    public getCapacity(): number {
         return this._capacity;
     }
-    public getPower () : number {
+
+    public getPower(): number {
         return this._power;
     }
-    public getRegistrationNumber () : string {
+
+    public getRegistrationNumber(): string {
         return this._Id;
     }
-    public getColor () : string {
+
+    public getColor(): string {
         return this._color;
     }
 }
@@ -43,14 +56,23 @@ export class Car {
 export class RaceCar extends Car {
     private readonly _topSpeed;
 
-    constructor(value: number, capacity: number, power: number, Id: string, color: string, topSpeed: number) {
-     super(value, capacity, power, Id, color);
-     this._topSpeed = topSpeed
- }
 
- public getTopspeed () : number {
-     return this._topSpeed;
- }
+    constructor(raceCar: {
+        value: number,
+        capacity: number,
+        power: number,
+        id: string,
+        color: string,
+        topSpeed: number
+    }) {
+        super(raceCar)
+        this._topSpeed = raceCar.topSpeed;
+    }
+
+
+    public getTopspeed(): number {
+        return this._topSpeed;
+    }
 
     public toString(): string {
         return `\nvalue: ${this._value}$\t` +

@@ -1,10 +1,10 @@
 'use strict';
-import {Warehouse} from "./Warehouse";
-import {Car, RaceCar} from "./Vehicle"
+import {Warehouse} from "./Warehouse.js";
+import {Car, RaceCar} from "./Vehicle.js"
 
 let capacity: any;
 
-if(storageCheck()) {
+if (storageCheck()) {
 // in case a non-number value is typed in.
     while (1) {
         capacity = prompt("Capacity of this Warehouse: ");
@@ -37,15 +37,17 @@ for (let i = 1; i < warehouse.getCapacity() + 1; i++) {
     const number = document.createElement('div');
     number.classList.add('number');
 
-    (<HTMLInputElement>number).textContent = String(i);
+    (<HTMLInputElement>number).textContent = String(i);   //The Parking slot starts with 1
     (<HTMLInputElement>parkingSlot).appendChild(number);
     (<HTMLInputElement>parkhouse).appendChild(parkingSlot);
 
-    console.log(localStorage.getItem(`parkingSlot N.${i}`))
-    if(localStorage.getItem(`parkingSlot N.${i}`)) {
+    // console.log("Parking Slot N." + i + " " + localStorage.getItem(`parkingSlot N.${i}`))
+    if (localStorage.getItem(`parkingSlot N.${i}`)) {
         // @ts-ignore
         const tmpCar = JSON.parse(localStorage.getItem(`parkingSlot N.${i}`));
-        parkCar(tmpCar["color"], i);
+        parkCar(tmpCar["color"], i - 1);
+        console.log(tmpCar.topSpeed);
+        warehouse.parkCar(tmpCar["topSpeed"] === undefined ? new Car(tmpCar) : new RaceCar(tmpCar));
     }
 }
 
@@ -91,18 +93,19 @@ function showVehicle(vehicle: Car | RaceCar | null) {
     (<HTMLInputElement>document.querySelector(".vehicle-id")).textContent = String(vehicle?.getRegistrationNumber());
     (<HTMLInputElement>document.querySelector(".vehicle-color")).textContent = String(vehicle?.getColor());
 
+    console.log(vehicle.constructor.name);
     if (vehicle instanceof RaceCar) {
-        (<HTMLInputElement>document.querySelector(".vehicle-topspeed")).style.display = "block";
+        (<HTMLInputElement>document.querySelector("#hide-Top-Speed")).style.display = "block";
         (<HTMLInputElement>document.querySelector(".vehicle-topspeed")).textContent = String(vehicle?.getTopspeed());
     } else {
-        (<HTMLInputElement>document.querySelector(".vehicle-topspeed")).style.display = "none";
+        (<HTMLInputElement>document.querySelector("#hide-Top-Speed")).style.display = "none";
     }
 }
 
 /**
  * @brief check whether the "user" data is stored in the web Storage and returns "true" if it is stored
  */
-function storageCheck() : boolean {
+function storageCheck(): boolean {
     if (localStorage.getItem("capacity")) {
         // @ts-ignore
         capacity = parseInt(localStorage.getItem("capacity"), 10);
@@ -110,30 +113,22 @@ function storageCheck() : boolean {
     }
     return true;
 }
+
 /**
  * @brief creates a Vehicle object and passes it to the localStorage
  * @params parkingSlot, value, capacity, power, id, color, topSpeed
  */
-function storeVehicleOnLocalBrowser (parkingSlot: number, value: number, capacity: number, power: number,
-                                     id: string, color: string, topSpeed: number = 0) {
-    interface VehicleType {
-        "value": number,
-        "capacity": number,
-        "power": number,
-        "id": string,
-        "color": string
-        "topSpeed": number
-    }
-    const vehicle: VehicleType = {
-        "value": value,
-        "capacity": capacity,
-        "power": power,
-        "id": id,
-        "color": color,
-        "topSpeed": topSpeed
-    }
+function storeVehicleOnLocalBrowser(vehicleData:
+    {
+        value: number,
+        capacity: number,
+        power: number,
+        id: string,
+        color: string
+    }) {
 
-    localStorage.setItem(`parkingSlot N.${parkingSlot}`, JSON.stringify(vehicle));
+    console.log(`Set parkingslot to ${localStorage.length}`);
+    localStorage.setItem(`parkingSlot N.${localStorage.length}`, JSON.stringify(vehicleData));
 }
 
 // Change car type
@@ -161,42 +156,49 @@ parkingSlotGroup?.addEventListener("click", function (event) {
 // Park Car
 submitBtn?.addEventListener("click", function (event) {
     event.preventDefault(); //prevents the page to reload after a submit
-    if((warehouse.getCapacity()) == warehouse.getCurrentAmountOfCars()) {
+    if ((warehouse.getCapacity()) == warehouse.getCurrentAmountOfCars()) {
         alert("max. Capacity reached");
         return;
     }
-    const value: number = Number((<HTMLInputElement>document.getElementById("value")).value);
-    const capacity: number = Number((<HTMLInputElement>document.getElementById("capacity")).value);
-    const power: number = Number((<HTMLInputElement>document.getElementById("power")).value);
-    const id: string = (<HTMLInputElement>document.getElementById("Id")).value.toUpperCase();
-    const color: string = (<HTMLInputElement>document.getElementById("color")).value.toLowerCase();
+
+    const vehicleData = {
+        value: Number((<HTMLInputElement>document.getElementById("value")).value),
+        capacity: Number((<HTMLInputElement>document.getElementById("capacity")).value),
+        power: Number((<HTMLInputElement>document.getElementById("power")).value),
+        id: (<HTMLInputElement>document.getElementById("Id")).value.toUpperCase(),
+        color: (<HTMLInputElement>document.getElementById("color")).value.toLowerCase(),
+        topSpeed: 0
+    }
+
     const regEx: RegExp = /[A-Z]+\d{1,6}$/;
 
-    if (value && capacity && power && id && color != null) {
+    if (vehicleData.value && vehicleData.capacity && vehicleData.power && vehicleData.id && vehicleData.color != null) {
         // code-block executed if all variables have a value
 
-        if(!regEx.test(id)) { //Check if the Id of the Car is correct
+        if (!regEx.test(vehicleData.id)) { //Check if the Id of the Car is correct
             alert("wrong Car identification Number\n Hint: this is a numberplate -> Canton + 1-6 digits");
             return;
         }
 
         if ((<HTMLInputElement>carType).checked) {    //Race Car
-            const topspeed: number = Number((<HTMLInputElement>document.getElementById("topspeed")).value);
-            if (topspeed != 0) {
+            vehicleData.topSpeed = Number((<HTMLInputElement>document.getElementById("topspeed")).value);
+            if (vehicleData.topSpeed != 0) {
 
-                storeVehicleOnLocalBrowser(warehouse.lowestParkingIndex(), value, capacity, power, id, color, topspeed);
-                warehouse.parkCar(new RaceCar(value, capacity, power, id, color, topspeed));
-                parkCar(color, warehouse.lowestParkingIndex());
+                storeVehicleOnLocalBrowser(vehicleData);
+                warehouse.parkCar(new RaceCar(vehicleData));
+                parkCar(vehicleData.color, warehouse.lowestParkingIndex());
                 document.querySelector("form")?.reset();
             } else {
                 alert("Topspeed missing or wrong!");
             }
 
         } else {      //Normal Car
-
-            storeVehicleOnLocalBrowser(warehouse.lowestParkingIndex(), value, capacity, power, id, color);
-            warehouse.parkCar(new Car(value, capacity, power, id, color));
-            parkCar(color, warehouse.lowestParkingIndex());
+            // @ts-ignore
+            delete vehicleData.topSpeed;
+            storeVehicleOnLocalBrowser(vehicleData);
+            warehouse.parkCar(new Car(vehicleData));
+            console.log(warehouse.lowestParkingIndex());
+            parkCar(vehicleData.color, warehouse.lowestParkingIndex());
             document.querySelector("form")?.reset();
         }
     } else {

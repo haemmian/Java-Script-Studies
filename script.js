@@ -32,15 +32,16 @@ for (let i = 1; i < warehouse.getCapacity() + 1; i++) {
     parkingSlot.classList.add('parking-slot');
     const number = document.createElement('div');
     number.classList.add('number');
-    number.textContent = String(i);
+    number.textContent = String(i); //The Parking slot starts with 1
     parkingSlot.appendChild(number);
     parkhouse.appendChild(parkingSlot);
-    console.log(localStorage.length);
-
+    // console.log("Parking Slot N." + i + " " + localStorage.getItem(`parkingSlot N.${i}`))
     if (localStorage.getItem(`parkingSlot N.${i}`)) {
         // @ts-ignore
         const tmpCar = JSON.parse(localStorage.getItem(`parkingSlot N.${i}`));
-        parkCar(tmpCar["color"], i);
+        parkCar(tmpCar["color"], i - 1);
+        console.log(tmpCar.topSpeed);
+        warehouse.parkCar(tmpCar["topSpeed"] === undefined ? new Car(tmpCar) : new RaceCar(tmpCar));
     }
 }
 /**
@@ -79,12 +80,13 @@ function showVehicle(vehicle) {
     document.querySelector(".vehicle-power").textContent = String(vehicle === null || vehicle === void 0 ? void 0 : vehicle.getPower());
     document.querySelector(".vehicle-id").textContent = String(vehicle === null || vehicle === void 0 ? void 0 : vehicle.getRegistrationNumber());
     document.querySelector(".vehicle-color").textContent = String(vehicle === null || vehicle === void 0 ? void 0 : vehicle.getColor());
+    console.log(vehicle.constructor.name);
     if (vehicle instanceof RaceCar) {
-        document.querySelector(".vehicle-topspeed").style.display = "block";
+        document.querySelector("#hide-Top-Speed").style.display = "block";
         document.querySelector(".vehicle-topspeed").textContent = String(vehicle === null || vehicle === void 0 ? void 0 : vehicle.getTopspeed());
     }
     else {
-        document.querySelector(".vehicle-topspeed").style.display = "none";
+        document.querySelector("#hide-Top-Speed").style.display = "none";
     }
 }
 /**
@@ -102,18 +104,9 @@ function storageCheck() {
  * @brief creates a Vehicle object and passes it to the localStorage
  * @params parkingSlot, value, capacity, power, id, color, topSpeed
  */
-function storeVehicleOnLocalBrowser(parkingSlot, value, capacity, power, id, color, topSpeed = 0) {
-    const vehicle = {
-        "value": value,
-        "capacity": capacity,
-        "power": power,
-        "id": id,
-        "color": color,
-        "topSpeed": topSpeed
-    };
-    console.log(parkingSlot);
-    localStorage.setItem(`parkingSlot N.${parkingSlot}`, JSON.stringify(vehicle));
-    console.log(JSON.parse(localStorage.getItem(`parkingSlot N.${parkingSlot}`)));
+function storeVehicleOnLocalBrowser(vehicleData) {
+    console.log(`Set parkingslot to ${localStorage.length}`);
+    localStorage.setItem(`parkingSlot N.${localStorage.length}`, JSON.stringify(vehicleData));
 }
 // Change car type
 carType === null || carType === void 0 ? void 0 : carType.addEventListener("change", function (event) {
@@ -142,24 +135,27 @@ submitBtn === null || submitBtn === void 0 ? void 0 : submitBtn.addEventListener
         alert("max. Capacity reached");
         return;
     }
-    const value = Number(document.getElementById("value").value);
-    const capacity = Number(document.getElementById("capacity").value);
-    const power = Number(document.getElementById("power").value);
-    const id = document.getElementById("Id").value.toUpperCase();
-    const color = document.getElementById("color").value.toLowerCase();
+    const vehicleData = {
+        value: Number(document.getElementById("value").value),
+        capacity: Number(document.getElementById("capacity").value),
+        power: Number(document.getElementById("power").value),
+        id: document.getElementById("Id").value.toUpperCase(),
+        color: document.getElementById("color").value.toLowerCase(),
+        topSpeed: 0
+    };
     const regEx = /[A-Z]+\d{1,6}$/;
-    if (value && capacity && power && id && color != null) {
+    if (vehicleData.value && vehicleData.capacity && vehicleData.power && vehicleData.id && vehicleData.color != null) {
         // code-block executed if all variables have a value
-        if (!regEx.test(id)) { //Check if the Id of the Car is correct
+        if (!regEx.test(vehicleData.id)) { //Check if the Id of the Car is correct
             alert("wrong Car identification Number\n Hint: this is a numberplate -> Canton + 1-6 digits");
             return;
         }
         if (carType.checked) { //Race Car
-            const topspeed = Number(document.getElementById("topspeed").value);
-            if (topspeed != 0) {
-                storeVehicleOnLocalBrowser(warehouse.lowestParkingIndex()+1, value, capacity, power, id, color, topspeed);
-                warehouse.parkCar(new RaceCar(value, capacity, power, id, color, topspeed));
-                parkCar(color, warehouse.lowestParkingIndex());
+            vehicleData.topSpeed = Number(document.getElementById("topspeed").value);
+            if (vehicleData.topSpeed != 0) {
+                storeVehicleOnLocalBrowser(vehicleData);
+                warehouse.parkCar(new RaceCar(vehicleData));
+                parkCar(vehicleData.color, warehouse.lowestParkingIndex());
                 (_a = document.querySelector("form")) === null || _a === void 0 ? void 0 : _a.reset();
             }
             else {
@@ -167,9 +163,12 @@ submitBtn === null || submitBtn === void 0 ? void 0 : submitBtn.addEventListener
             }
         }
         else { //Normal Car
-            storeVehicleOnLocalBrowser(warehouse.lowestParkingIndex()+1, value, capacity, power, id, color);
-            warehouse.parkCar(new Car(value, capacity, power, id, color));
-            parkCar(color, warehouse.lowestParkingIndex());
+            // @ts-ignore
+            delete vehicleData.topSpeed;
+            storeVehicleOnLocalBrowser(vehicleData);
+            warehouse.parkCar(new Car(vehicleData));
+            console.log(warehouse.lowestParkingIndex());
+            parkCar(vehicleData.color, warehouse.lowestParkingIndex());
             (_b = document.querySelector("form")) === null || _b === void 0 ? void 0 : _b.reset();
         }
     }

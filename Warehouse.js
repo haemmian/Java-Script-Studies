@@ -10,8 +10,8 @@ export class Warehouse {
      */
     lowestParkingIndex() {
         //@ts-ignore
-        return this._parkingSlot.includes(null) ? this._parkingSlot.indexOf(null) - 1 :
-            this._parkingSlot.length - 1;
+        return this._parkingSlot.includes(null) ? this._parkingSlot.indexOf(null) :
+            (this._parkingSlot.length - 1) < 0 ? 0 : this._parkingSlot.length - 1;
     }
     /**
      * @brief parks a car in the warehouse
@@ -23,7 +23,6 @@ export class Warehouse {
         this._parkingSlot.includes(null) ? this._parkingSlot.splice(
         // @ts-ignore
         this._parkingSlot.indexOf(null), 0, car) : this._parkingSlot.push(car);
-        console.log("Car Parked!");
     }
     /**
      * @brief gets the parked car at index

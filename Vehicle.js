@@ -1,11 +1,12 @@
 'use strict';
 export class Car {
-    constructor(value, capacity, power, Id, color) {
-        this._value = value;
-        this._capacity = capacity;
-        this._power = power;
-        this._Id = Id;
-        this._color = color;
+    constructor(carData) {
+        // value: number, capacity: number, power: number, Id: string, color: string
+        this._value = carData.value;
+        this._capacity = carData.capacity;
+        this._power = carData.power;
+        this._Id = carData.id;
+        this._color = carData.color;
     }
     toString() {
         return `\nvalue: ${this._value}$\t` +
@@ -31,9 +32,9 @@ export class Car {
     }
 }
 export class RaceCar extends Car {
-    constructor(value, capacity, power, Id, color, topSpeed) {
-        super(value, capacity, power, Id, color);
-        this._topSpeed = topSpeed;
+    constructor(raceCar) {
+        super(raceCar);
+        this._topSpeed = raceCar.topSpeed;
     }
     getTopspeed() {
         return this._topSpeed;
