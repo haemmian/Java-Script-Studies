@@ -1,0 +1,83 @@
+1 - a basic warehouse
+Create the classes and . A car has a value, a capacity and a top speed. A warehouse on the other hand has a capacity only. TheCar Warehouse
+warehouse's capacity can only be set once during initialisation (use the constructor).
+
+2 - adding functionality to the warehouse
+Users should now be able to park a car in the warehouse by calling a method. The warehouse then has to store the car internally.
+When a user wants to access a car, they should be able to get the car again, by specifying its index.
+Warehouse should now have two public methods:
+
+/**
+* @brief parks a car in the warehouse
+* @param car to park
+*/
+// your method
+/**
+* @brief gets the parked car at index
+* @param index of the parked car
+* @return the car at specified index
+*/
+// your method
+
+3 - maintaining the warehouse
+Now that users can park cars in the warehouse, and access them, it would be great to know how many cars are in the warehouse. Add a new method for
+that!
+Additionally, add a method that returns the warehouse's capacity.
+/**
+* @brief gets the number of cars in the warehouse
+* @return number of cars in the warehouse
+*/
+// your method
+/**
+* @brief gets the warehouse's capacity
+* @return warehouse's capacity
+*/
+// your method
+That's it for the first version!
+Create a new branch for the next, more advanced version!
+
+4 - adjusting the base car
+Up to now, cars had a value, a capacity and a top speed.
+However, the average driver won't hit top speed in modern cars - that's a property more interesting for race cars. For the average driver, however, engine
+power (HP/PS), car colour, and (vehicle registration) number are far more important. So let's remove top speed, and instead find a way to add power,
+number and colour to the object.
+Additionally, find a way to specify value, power, capacity and colour in initialisation (tip: use the constructor).
+
+5 - race cars
+The warehouse can also store a special kind of car - the race car. As stated before, the car's top speed really matters in racing.
+Create a new class inheriting from and extending it with the top speed.Car
+
+6 - a smarter warehouse
+Find a way to retrieve all cars stored in the warehouse.
+A second method should also return all cars from the warehouse, but sorted by registration number.
+
+
+///////////////////////////////////////////
+
+// LOCAL-STORAGE
+{
+    "capacity": 120,
+    "parking slots" : [
+    {
+        "parkingSlot": 5
+        "value": 2,
+        "capacity": 3,
+        "power":    33,
+        "id":       "ZH132",
+        "color":    "#FFFF"
+    },
+    usw....]
+
+}
+oder
+
+"capacity": 120,
+
+"parkingSlot N0":
+{
+        "value": 2,
+        "capacity": 3,
+        "power":    33,
+        "id":       "ZH132",
+        "color":    "#FFFF"
+},
