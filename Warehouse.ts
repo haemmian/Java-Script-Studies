@@ -7,6 +7,10 @@ export class Warehouse {
 
     constructor(capacity: number) {
         this._capacity = capacity;
+        this._parkingSlot.length = capacity;
+
+        //@ts-ignore
+        this._parkingSlot.fill(null, 0, capacity)
     }
 
     /**
@@ -16,20 +20,26 @@ export class Warehouse {
     public lowestParkingIndex() : number {
         //@ts-ignore
         return this._parkingSlot.includes(null) ? this._parkingSlot.indexOf(null) :
-            (this._parkingSlot.length - 1) < 0 ? 0 : this._parkingSlot.length - 1;
+            this._parkingSlot.length -1;
     }
 
     /**
      * @brief parks a car in the warehouse
      * @param car to park
+     * @param index
      */
-    public parkCar (car: Car | RaceCar) {
+    public parkCar (car: Car | RaceCar, index: number | null = null) {
+
+
 
         // Check if there are any free parking slots
-        // @ts-ignore
-        this._parkingSlot.includes(null) ? this._parkingSlot.splice(
+        if (index == null) {
             // @ts-ignore
-            this._parkingSlot.indexOf(null), 0, car) : this._parkingSlot.push(car);
+            // @ts-ignore
+            this._parkingSlot[this.lowestParkingIndex()] = car;
+            return;
+        }
+        this._parkingSlot[index] = car;
     }
 
     /**
@@ -39,15 +49,12 @@ export class Warehouse {
      */
     public getCar (index: number) : Car | RaceCar | null{
         if (!this._parkingSlot.length) {
-            console.log("No cars are in the warehouse");
             return null;
         }
         if (this._parkingSlot[index] == null) {
-            console.log(`There is no Car at parking slot ${index}`);
             return null;
         }
 
-        console.log(`Get car at parking slot ${index + 1}`);
         const tmpCar = this._parkingSlot[index];
 
         // By adding null to this index, the parking slots will not be shifted.

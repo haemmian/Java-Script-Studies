@@ -41,13 +41,11 @@ for (let i = 1; i < warehouse.getCapacity() + 1; i++) {
     (<HTMLInputElement>parkingSlot).appendChild(number);
     (<HTMLInputElement>parkhouse).appendChild(parkingSlot);
 
-    // console.log("Parking Slot N." + i + " " + localStorage.getItem(`parkingSlot N.${i}`))
     if (localStorage.getItem(`parkingSlot N.${i}`)) {
         // @ts-ignore
         const tmpCar = JSON.parse(localStorage.getItem(`parkingSlot N.${i}`));
         parkCar(tmpCar["color"], i - 1);
-        console.log(tmpCar.topSpeed);
-        warehouse.parkCar(tmpCar["topSpeed"] === undefined ? new Car(tmpCar) : new RaceCar(tmpCar));
+        warehouse.parkCar(tmpCar["topSpeed"] === undefined ? new Car(tmpCar) : new RaceCar(tmpCar), i - 1);
     }
 }
 
@@ -93,7 +91,6 @@ function showVehicle(vehicle: Car | RaceCar | null) {
     (<HTMLInputElement>document.querySelector(".vehicle-id")).textContent = String(vehicle?.getRegistrationNumber());
     (<HTMLInputElement>document.querySelector(".vehicle-color")).textContent = String(vehicle?.getColor());
 
-    console.log(vehicle.constructor.name);
     if (vehicle instanceof RaceCar) {
         (<HTMLInputElement>document.querySelector("#hide-Top-Speed")).style.display = "block";
         (<HTMLInputElement>document.querySelector(".vehicle-topspeed")).textContent = String(vehicle?.getTopspeed());
@@ -127,8 +124,7 @@ function storeVehicleOnLocalBrowser(vehicleData:
         color: string
     }) {
 
-    console.log(`Set parkingslot to ${localStorage.length}`);
-    localStorage.setItem(`parkingSlot N.${localStorage.length}`, JSON.stringify(vehicleData));
+    localStorage.setItem(`parkingSlot N.${warehouse.lowestParkingIndex() + 1}`, JSON.stringify(vehicleData));
 }
 
 // Change car type
@@ -185,8 +181,8 @@ submitBtn?.addEventListener("click", function (event) {
             if (vehicleData.topSpeed != 0) {
 
                 storeVehicleOnLocalBrowser(vehicleData);
-                warehouse.parkCar(new RaceCar(vehicleData));
                 parkCar(vehicleData.color, warehouse.lowestParkingIndex());
+                warehouse.parkCar(new RaceCar(vehicleData));
                 document.querySelector("form")?.reset();
             } else {
                 alert("Topspeed missing or wrong!");
@@ -196,21 +192,23 @@ submitBtn?.addEventListener("click", function (event) {
             // @ts-ignore
             delete vehicleData.topSpeed;
             storeVehicleOnLocalBrowser(vehicleData);
-            warehouse.parkCar(new Car(vehicleData));
-            console.log(warehouse.lowestParkingIndex());
             parkCar(vehicleData.color, warehouse.lowestParkingIndex());
+            warehouse.parkCar(new Car(vehicleData));
             document.querySelector("form")?.reset();
         }
     } else {
         alert("Missing or wrong Data!");
     }
+
+
 });
 
 //get Car
 getCarBtn?.addEventListener("click", function () {
-    const index: number = Number((<HTMLInputElement>document.getElementById("index")).value) < 0 ? 0 :
-        Number((<HTMLInputElement>document.getElementById("index")).value) - 1;
+    const parkingSlot: number = Number((<HTMLInputElement>document.getElementById("index")).value);
+    const index: number = parkingSlot < 0 ? 0 : parkingSlot - 1;
 
+    localStorage.removeItem(`parkingSlot N.${parkingSlot}`);
     getCarfromWarehouse(index);
     showVehicle(warehouse.getCar(index));
 });
@@ -220,4 +218,3 @@ resetBtn?.addEventListener("click", function () {
     localStorage.clear();
     location.reload();
 })
-
